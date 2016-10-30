@@ -1,0 +1,33 @@
+1477340140741	Copy file
+1477340671216	Copy file
+1477340679014	Rename resource 'listaArticulo.js'
+1477340822488	Rename resource 'administracionArticulos.jsp'
+1477340872789	Rename resource 'administracionArticulos.js'
+1477340875114	Move 'altaArticulo.js' to 'altaArticulo'
+1477340892292	Move 'altaArticulo.js' to 'negocio'
+1477340897381	Delete element
+1477340901298	Move 'listaArticulos.js' to 'negocio'
+1477340913836	Move 3 resources to 'vista'
+1477340942551	Rename resource 'altaArticulo'
+1477340945763	Move 2 resources to 'administracionArticulos'
+1477341653612	Rename resource 'categoria.jsp'
+1477341662300	Rename resource 'datosGenerales.jsp'
+1477403680839	Copy file
+1477403694448	Copy file
+1477403702245	Copy file
+1477403713686	Copy file
+1477421799809	Rename type 'MyJmsServlet'
+1477421811150	Rename type 'ReceivingMdb'
+1477422428027	Delete element
+1477422650519	Rename type 'Consumidor'
+1477422672345	Copy compilation unit
+1477423305468	Delete element
+1477423599246	Delete element
+1477425166804	Copy compilation unit
+1477425466522	Rename local variable 'solicitudVO'
+1477425917253	Copy compilation unit
+1477426233790	Copy compilation unit
+1477500411963	Rename resource 'altaSolicitudCompra.jsp'
+1477663698323	Copy packages
+1477676030494	Copy files
+1477677215770	Delete elements

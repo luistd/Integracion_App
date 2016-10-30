@@ -1,0 +1,24 @@
+package com.controller;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
+@Path("/users")
+public class HelloWorldResource {
+
+	@GET
+	public Response getUser() {
+
+		return Response.status(200).entity("getUser is called").build();
+
+	}
+
+	@GET
+	@Path("/vip")
+	public Response getUserVIP() {
+
+		return Response.status(200).entity("getUserVIP is called").build();
+
+	}
+}

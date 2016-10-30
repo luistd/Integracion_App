@@ -1,0 +1,30 @@
+package com.mensajeria;
+
+import javax.ejb.ActivationConfigProperty;
+import javax.ejb.MessageDriven;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
+
+
+@MessageDriven(mappedName="java:/jms/queue/ColaTestIA", activationConfig =  {
+        @ActivationConfigProperty(propertyName = "destination",
+                                  propertyValue = "java:/jms/queue/ColaTestIA"),
+        @ActivationConfigProperty(propertyName = "destinationType",
+                                  propertyValue = "javax.jms.Queue")
+    })
+public class SolicitudesArticulos implements MessageListener{
+	
+	public SolicitudesArticulos(){}
+	
+	public void onMessage(Message message) {
+		try {
+			TextMessage mensaje = (TextMessage) message;
+			String pedido = mensaje.getText();
+			System.out.println("se recibio el siguiente texto:" + pedido);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error al procesar el texto:" + e);
+		}
+	}
+}

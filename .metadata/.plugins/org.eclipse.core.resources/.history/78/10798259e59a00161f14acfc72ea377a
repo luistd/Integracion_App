@@ -1,0 +1,44 @@
+package com.mensajeria;
+
+import javax.annotation.Resource;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.QueueConnection;
+import javax.jms.QueueSession;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
+import com.vo.ArticuloVO;
+
+public class Productor{
+	@Resource(lookup = "java:/myJmsTest/MyConnectionFactory")
+    ConnectionFactory connectionFactory;
+
+    @Resource(lookup = "java:/myJmsTest/MyQueue")
+    Destination destination;
+
+    public void informarAltaArticulo(ArticuloVO articulo){
+		MessageProducer producer = null;
+        QueueSession session = null;
+        QueueConnection connection = null;
+        try {
+            connection = (QueueConnection) connectionFactory.createConnection("myJmsUser","sa");
+            session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+            producer = session.createProducer(destination);
+            TextMessage message = session.createTextMessage("Aca enviar un json con el articulo creado...!");
+            producer.send(message);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }finally {
+			try {
+				producer.close();
+				session.close();
+				connection.close();
+			} catch (JMSException e) {
+				e.printStackTrace();
+			}
+        }
+	}
+}

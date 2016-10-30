@@ -1,0 +1,21 @@
+package com.interfaces;
+
+import java.util.List;
+
+import javax.ejb.Remote;
+
+import com.vo.ArticuloVO;
+import com.vo.CategoriaVO;
+import com.vo.MarcaVO;
+import com.vo.PaisVO;
+
+@Remote
+public interface StatelessHelloServiceRemote {
+	List<PaisVO> obtenerPaises();
+	List<MarcaVO> obtenerMarcas();
+	void guardarArticulo(ArticuloVO articuloVO);
+	void eliminarArticulo(String codigo);
+	List<ArticuloVO> obtenerArticulos();
+	ArticuloVO buscarArticuloPorId(String codigo);
+	List<CategoriaVO> obtenerCategorias();
+}

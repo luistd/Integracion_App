@@ -1,0 +1,95 @@
+package com.facade.implementacion;
+
+import java.util.Hashtable;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import com.facade.IFacade;
+import com.interfaces.ArticuloServiceRemote;
+import com.vo.ArticuloVO;
+import com.vo.CategoriaVO;
+import com.vo.MarcaVO;
+import com.vo.PaisVO;
+import com.vo.SolicitudArticulosVO;
+
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class Facade implements IFacade{
+	private static Facade facade;
+
+	private final static Hashtable jndiProperties = new Hashtable();
+	static {
+		jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+		jndiProperties.put("jboss.naming.client.ejb.context", true);	
+	}
+
+	private final static String earName = "DepositoEAR"; // Nombre del módulo EAR
+	private final static String ejbModuleName = "Backend"; // Nombre del módulo EJB
+	private final static String distinctName = ""; // Opcional para resolver repeticiones en nombres
+	private final static String ejbClassName = "ArticuloService"; // Nombre corto del EJB
+	private final static String fullInterfaceName = ArticuloServiceRemote.class.getName();
+	private final static String lookupName = "ejb:" + 
+									  earName + "/" +
+									  ejbModuleName + "/" + 
+									  distinctName + "/" + 
+									  ejbClassName + "!" + 
+									  fullInterfaceName;
+	
+	private static ArticuloServiceRemote mbr;
+	
+	public static final Facade getInstance() throws NamingException{
+		if (facade == null){
+			facade = new Facade();
+			Context context = new InitialContext(jndiProperties);
+			mbr = (ArticuloServiceRemote) context.lookup(lookupName);
+		}
+		return facade;
+	}
+
+	@Override
+	public List<PaisVO> obtenerPaises() {
+		return mbr.obtenerPaises();
+	}
+
+	@Override
+	public List<MarcaVO> obtenerMarcas() {
+		return mbr.obtenerMarcas();
+	}
+
+	@Override
+	public ArticuloVO buscarArticuloPorId(String codigo) {
+		return mbr.buscarArticuloPorId(codigo);
+	}
+
+	@Override
+	public void guardarArticulo(ArticuloVO articuloVO) {
+		mbr.guardarArticulo(articuloVO);
+	}
+
+	@Override
+	public void eliminarArticulo(String codigo) {
+		mbr.eliminarArticulo(codigo);
+	}
+
+	@Override
+	public List<ArticuloVO> obtenerArticulos() {
+		return mbr.obtenerArticulos();
+	}
+	
+	@Override
+	public List<CategoriaVO> obtenerCategorias() {
+		return mbr.obtenerCategorias();
+	}
+	
+	@Override
+	public List<ArticuloVO> buscarArticulo(ArticuloVO articulo) {
+		return mbr.buscarArticulo(articulo);
+	}	
+	
+	@Override
+	public void guardarSolicitudArticulos(SolicitudArticulosVO solicitudVO) {
+		mbr.guardarSolicitudArticulos(solicitudVO);
+	}
+}

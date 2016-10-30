@@ -1,0 +1,29 @@
+package com.controller;
+import javax.annotation.Resource;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.naming.NamingException;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+ 
+@Controller
+public class ArticulosController{
+	
+	@RequestMapping(value = "/alta-articulo")
+	public ModelAndView altaArticulo() throws NamingException, JsonProcessingException {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("administracionArticulos/altaArticulo");
+		return model;
+	}
+	
+	@RequestMapping(value = "/lista-articulos")
+	public ModelAndView listaArticulos() throws NamingException {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("administracionArticulos/listaArticulos");
+		return model;
+	}
+}

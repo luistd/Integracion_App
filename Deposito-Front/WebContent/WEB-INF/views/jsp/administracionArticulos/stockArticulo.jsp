@@ -1,0 +1,19 @@
+<div class="boxBorder"> 
+	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+		<label>Cantidad en Stock</label>
+		<input name="stock" class="form-control form-group"/>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="top:127px; padding:0px">
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right boton-articulo">
+			<a class="btn btn-primary btn-block btn-success" href="#" role="button" onClick="guardarArticulo();">
+				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+				Guardar
+			</a>
+		</div>
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right boton-articulo">
+			<a class="btn btn-primary btn-block btn-primary previous" href="#" role="button">
+				&#60; Anterior 
+			</a>
+		</div>
+	</div>
+</div>

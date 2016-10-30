@@ -1,0 +1,151 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Artículos</title>
+		<spring:url value="/resources/css/bootstrap.min.css" var="bootstrapCss" />
+		<link href="${bootstrapCss}" rel="stylesheet" />
+	</head>
+	
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+		  <div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Administración de Artículos</a>
+			</div>
+		  </div>
+		</nav>
+		
+		<div id="mensajeError" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 alert alert-danger fade in" style="display:none">
+			<strong>ERROR:</strong>
+			<b></b>
+		</div>
+		<div id="mensajeOk" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 alert alert-success fade in" style="display:none">
+			<strong>Success:</strong>
+			<b></b>
+		</div>
+		
+		<div class="container">  
+	    	<div class="progress">
+	     		<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" style="width: 20%;">Paso 1 de 3</div>
+  			</div>
+  
+			<div class="navbar">
+			   <div class="navbar-inner">
+			         <ul class="nav nav-pills">
+			            <li class="active"><a href="#step1" data-toggle="tab" data-step="1">Categoría</a></li>
+			            <li><a href="#step2" data-toggle="tab" data-step="2">Datos Generales</a></li>
+			            <li><a href="#step3" data-toggle="tab" data-step="3">Stock</a></li>
+			         </ul>
+			   </div>
+			</div>
+
+			<div class="tab-content">
+			   <div class="tab-pane fade in active" id="step1">
+					<div class="well"> 
+					    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<label>Categoría</label>
+							<select name="categoria" class="form-control form-group">
+								<option value=""> - Seleccionar - </option>
+								<c:forEach items="${categorias}" var="categoria">
+									<option value="${categoria.id}">${categoria.nombre}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+			      	<a class="btn btn-default btn-lg next" href="#">Continuar</a>
+			   </div>
+			   
+				<div class="tab-pane fade" id="step2">
+					<div class="well"> 
+						<form id="formularioArticulo" name="articulo">
+						  	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+								<label>Código</label>
+								<input name="codigo" class="form-control form-group"/>
+							</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+								<label>Nombre</label>
+								<input name="nombre" class="form-control form-group"/>
+							</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+								<label>Descripción</label>
+								<input name="descripcion" class="form-control form-group"/>
+							</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+								<label>Precio</label>
+								<input name="precio" class="form-control form-group"/>
+							</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+								<label>Marca</label>
+								<select name="marca" class="form-control form-group">
+									<c:forEach items="${marcas}" var="marca">
+										<option value="${marca.id}">${marca.nombre}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+								<label>Origen</label>
+								<select name="origen" class="form-control form-group">
+									<c:forEach items="${paises}" var="pais">
+										<option value="${pais.id}">${pais.nombre}</option>
+									</c:forEach>
+								</select>
+							</div>
+							
+							
+							<div id="categoria_electrodomestico" style="display:none">
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<label>Ficha Técnica</label>
+									<input class="form-control form-group"/>
+								</div>
+							</div>
+							<div id="categoria_moda" style="display:none">
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<label>Color</label>
+									<input class="form-control form-group"/>
+								</div>
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<label>Talle</label>
+									<input class="form-control form-group"/>
+								</div>
+							</div>
+							<div id="categoria_mueble" style="display:none">
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<label>Material</label>
+									<input class="form-control form-group"/>
+								</div>
+							</div>
+							<div id="categoria_ninios" style="display:none">
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<label>Edad Recomendada</label>
+									<input class="form-control form-group"/>
+								</div>
+							</div>
+						</form>
+					</div>
+				    <a class="btn btn-default next" href="#">Continue</a>
+				</div>
+				
+				<div class="tab-pane fade" id="step3">
+					<div class="well"> 
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<label>Stock</label>
+							<input name="stock" class="form-control form-group"/>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
+						<a class="btn btn-primary btn-block btn-success" href="#" role="button" onClick="guardarArticulo();">
+							<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+							Guardar
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>		
+		<script src="resources/js/vista/bootstrap.min.js"></script>
+		<script src="resources/js/negocio/altaArticulo.js"></script>
+	</body>
+</html>

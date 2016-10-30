@@ -1,0 +1,14 @@
+package com.vo;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
+public class ItemRecepcionCompra {
+	private Integer id;
+	private ArticuloVO articulo;
+	private Integer cantidad;
+	
+	
+}

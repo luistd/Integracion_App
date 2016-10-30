@@ -1,0 +1,6 @@
+<div id="categoria_mueble" style="display:none">
+	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+		<label>Material</label>
+		<input name="material" class="form-control form-group"/>
+	</div>
+</div>

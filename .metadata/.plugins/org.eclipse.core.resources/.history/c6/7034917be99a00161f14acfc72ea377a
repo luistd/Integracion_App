@@ -1,0 +1,104 @@
+package com.controller;
+import javax.annotation.Resource;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.QueueConnection;
+import javax.jms.QueueSession;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+import javax.naming.NamingException;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.facade.implementacion.Facade;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vo.ArticuloVO;
+ 
+@Controller
+public class ArticulosController{
+	@Resource(lookup = "java:/myJmsTest/MyConnectionFactory")
+    ConnectionFactory connectionFactory;
+
+    @Resource(lookup = "java:/myJmsTest/MyQueue")
+    Destination destination;
+	
+	@RequestMapping(value = "/alta-articulo")
+	public ModelAndView altaArticulo() throws NamingException {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("administracionArticulos/altaArticulo");
+		model.addObject("paises", Facade.getInstance().obtenerPaises());
+		model.addObject("marcas", Facade.getInstance().obtenerMarcas());
+		model.addObject("categorias", Facade.getInstance().obtenerCategorias());
+		Facade.getInstance().buscarArticulo(new ArticuloVO());
+		informarAltaArticulo(new ArticuloVO());
+		return model;
+	}
+	
+	@RequestMapping(value = "/lista-articulos")
+	public ModelAndView listaArticulos() throws NamingException {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("administracionArticulos/listaArticulos");
+		model.addObject("articulos", Facade.getInstance().obtenerArticulos());
+		return model;
+	}
+	
+	@RequestMapping(value = "/guardar-articulo", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean guardarArticulo(@RequestBody ArticuloVO articulo, BindingResult result) throws NamingException {
+		try{
+			Facade.getInstance().guardarArticulo(articulo);
+			
+		}catch(Exception e){
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
+	
+	@RequestMapping(value = "/eliminar-articulo", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean eliminarArticulo(@RequestBody String codigo, BindingResult result) throws NamingException {
+		try{
+			Facade.getInstance().eliminarArticulo(codigo);			
+		}catch(Exception e){
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
+	
+	public void informarAltaArticulo(ArticuloVO articulo) throws JsonProcessingException{
+		articulo.setNombre("Celular");
+		articulo.setDescripcion("no se, algo..");
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInString = mapper.writeValueAsString(articulo);
+		
+		MessageProducer producer = null;
+        QueueSession session = null;
+        QueueConnection connection = null;
+        try {
+            connection = (QueueConnection) connectionFactory.createConnection("myJmsUser","sa");
+            session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+            producer = session.createProducer(destination);
+            TextMessage message = session.createTextMessage("Aca enviar un json con el articulo creado...!: "+ jsonInString.toString());
+            producer.send(message);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }finally {
+			try {
+				producer.close();
+				session.close();
+				connection.close();
+			} catch (JMSException e) {
+				e.printStackTrace();
+			}
+        }
+	}
+}

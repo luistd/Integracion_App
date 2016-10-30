@@ -1,0 +1,36 @@
+package com.vo;
+
+import java.util.Date;
+import java.util.List;
+
+public class SolicitudArticulosVO {
+	private Integer id;
+	private Date fechaRecepcion;
+	private List<ItemSolicitudArticuloVO> itemSolicitudArticulo;
+	private EstadoSolicitudArticuloVO estado;
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Date getFechaRecepcion() {
+		return fechaRecepcion;
+	}
+	public void setFechaRecepcion(Date fechaRecepcion) {
+		this.fechaRecepcion = fechaRecepcion;
+	}
+	public List<ItemSolicitudArticuloVO> getItemSolicitudArticulo() {
+		return itemSolicitudArticulo;
+	}
+	public void setItemSolicitudArticulo(List<ItemSolicitudArticuloVO> itemSolicitudArticulo) {
+		this.itemSolicitudArticulo = itemSolicitudArticulo;
+	}
+	public EstadoSolicitudArticuloVO getEstado() {
+		return estado;
+	}
+	public void setEstado(EstadoSolicitudArticuloVO estado) {
+		this.estado = estado;
+	}
+}

@@ -1,0 +1,62 @@
+function guardarArticulo(){
+	var articulo = {};
+	articulo.codigo = $("#formularioArticulo [name='codigo']").val();
+	articulo.nombre = $("#formularioArticulo [name='nombre']").val();
+	articulo.descripcion = $("#formularioArticulo [name='descripcion']").val();
+	articulo.precio = $("#formularioArticulo [name='precio']").val();
+	var marca = {};
+	marca.id = $("#formularioArticulo [name='marca'] option:selected").val();
+	marca.nombre = $("#formularioArticulo [name='marca'] option:selected").text();
+	articulo.marca = marca;
+	
+	var origen = {};
+	origen.id = $("#formularioArticulo [name='origen'] option:selected").val();
+	origen.nombre = $("#formularioArticulo [name='origen'] option:selected").text();
+	articulo.origen = origen;
+	
+     $.ajax({
+        type: 'post',
+        url: 'guardar-articulo',
+        data: JSON.stringify(articulo),
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        success: function (data) {
+        	agregarArticuloATabla(articulo);
+        }
+    });
+}
+
+function agregarArticuloATabla(articulo){
+	$("#listaArticulos tbody").append(
+		"<tr id='articulo_"+articulo.codigo +"'>"+ 
+			"<td>"+articulo.codigo+"</td>"+ 
+			"<td>"+articulo.nombre+"</td>"+ 
+			"<td>"+articulo.descripcion+"</td>"+ 
+			"<td>"+articulo.precio+"</td>"+
+			"<td>"+articulo.marca.nombre+"</td>"+
+			"<td>"+articulo.origen.nombre+"</td>"+
+			"<td></td>"+ 
+		"</tr>");
+}
+
+function eliminarArticulo(codigo){				
+     $.ajax({
+        type: 'post',
+        url: 'eliminar-articulo',
+        data: codigo,
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        success: function (data) {
+        	if(data){
+        		$("#articulo_"+codigo).remove();
+        		$("#mensajeOk").find("b").html("Artículo eliminado.");
+        		$("#mensajeOk").show();
+        		$("#mensajeError").hide();
+        	}else{
+        		$("#mensajeError").find("b").html("Error al eliminar el artículo.");
+        		$("#mensajeError").show();
+        		$("#mensajeOk").hide();
+        	}
+        }
+    });
+}

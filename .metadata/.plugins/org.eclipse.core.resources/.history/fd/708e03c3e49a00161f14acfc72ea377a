@@ -1,0 +1,55 @@
+package com.mensajeria;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.annotation.Resource;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.QueueConnection;
+import javax.jms.QueueSession;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(urlPatterns = "/send")
+public class MyJmsServlet extends HttpServlet {
+	private static final long serialVersionUID = 6253787417866714582L;
+
+	@Resource(lookup = "java:/myJmsTest/MyConnectionFactory")
+    ConnectionFactory connectionFactory;
+
+    @Resource(lookup = "java:/myJmsTest/MyQueue")
+    Destination destination;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        PrintWriter writer = resp.getWriter();
+        MessageProducer producer = null;
+        QueueSession session = null;
+        QueueConnection connection = null;
+        try {
+            connection = (QueueConnection) connectionFactory.createConnection("myJmsUser","sa");
+            session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+            producer = session.createProducer(destination);
+            TextMessage message = session.createTextMessage("Hello, world! ^__^");
+            producer.send(message);
+            writer.println("Message sent! ^__^");
+        } catch (Exception ex) {
+            ex.printStackTrace(writer);
+        }finally {
+			try {
+				producer.close();
+				session.close();
+				connection.close();
+			} catch (JMSException e) {
+				e.printStackTrace();
+			}
+        }
+    }
+}

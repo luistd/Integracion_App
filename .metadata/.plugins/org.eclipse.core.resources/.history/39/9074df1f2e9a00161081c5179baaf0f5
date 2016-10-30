@@ -1,0 +1,13 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="boxBorder"> 
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+		<label>Categoría</label>
+		<select name="categoria" class="form-control form-group">
+			<option value=""> - Seleccionar - </option>
+			<c:forEach items="${categorias}" var="categoria">
+				<option value="${categoria.id}">${categoria.nombre}</option>
+			</c:forEach>
+		</select>
+	</div>
+</div>
+<a class="btn btn-default btn-lg next" href="#">Continuar</a>

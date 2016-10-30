@@ -1,0 +1,236 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Artículos</title>
+		<spring:url value="/resources/css/bootstrap.min.css" var="bootstrapCss" />
+		<link href="${bootstrapCss}" rel="stylesheet" />
+	</head>
+	
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+		  <div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Administración de Artículos</a>
+			</div>
+		  </div>
+		</nav>
+		
+		<div class="container">  
+	    	<div class="progress">
+	     		<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" style="width: 20%;">Paso 1 de 3</div>
+  			</div>
+  
+			<div class="navbar">
+			   <div class="navbar-inner">
+			         <ul class="nav nav-pills">
+			            <li class="active"><a href="#step1" data-toggle="tab" data-step="1">Categoría</a></li>
+			            <li><a href="#step2" data-toggle="tab" data-step="2">Datos Generales</a></li>
+			            <li><a href="#step3" data-toggle="tab" data-step="3">Stock</a></li>
+			         </ul>
+			   </div>
+			</div>
+
+			<div class="tab-content">
+			   <div class="tab-pane fade in active" id="step1">
+					<div class="well"> 
+					    <label>Security Question 1</label>
+					</div>
+			      	<a class="btn btn-default btn-lg next" href="#">Continuar</a>
+			   </div>
+			   
+				<div class="tab-pane fade" id="step2">
+					<div class="well"> 
+						<label>Security Question 2</label>
+					    <a class="btn btn-default next" href="#">Continue</a>
+					</div>
+				</div>
+				
+				<div class="tab-pane fade" id="step3">
+					<div class="well"> 
+						<label>Security Question 3</label>
+					    <a class="btn btn-default next" href="#">Continue</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="jumbotron">
+			<div class="container panel panel-info" style="padding:0px; margin-top:20px">				
+				<div class="panel-heading" style="margin-bottom:20px">
+					<h2 class="panel-title">
+						Datos del Artículo
+					</h2>
+				</div>
+				<form id="formularioArticulo" name="articulo">
+				  	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label>Código</label>
+						<input name="codigo" class="form-control form-group"/>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label>Nombre</label>
+						<input name="nombre" class="form-control form-group"/>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label>Descripción</label>
+						<input name="descripcion" class="form-control form-group"/>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label>Precio</label>
+						<input name="precio" class="form-control form-group"/>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label>Marca</label>
+						<select name="marca" class="form-control form-group">
+							<c:forEach items="${marcas}" var="marca">
+								<option value="${marca.id}">${marca.nombre}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label>Origen</label>
+						<select name="origen" class="form-control form-group">
+							<c:forEach items="${paises}" var="pais">
+								<option value="${pais.id}">${pais.nombre}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<label>Categoría</label>
+						<select name="categoria" class="form-control form-group">
+							<option value=""> - Seleccionar - </option>
+							<c:forEach items="${categorias}" var="categoria">
+								<option value="${categoria.id}">${categoria.nombre}</option>
+							</c:forEach>
+						</select>
+					</div>
+					
+					<div id="categoria_electrodomestico" style="display:none">
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<label>Ficha Técnica</label>
+							<input class="form-control form-group"/>
+						</div>
+					</div>
+					<div id="categoria_moda" style="display:none">
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<label>Color</label>
+							<input class="form-control form-group"/>
+						</div>
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<label>Talle</label>
+							<input class="form-control form-group"/>
+						</div>
+					</div>
+					<div id="categoria_mueble" style="display:none">
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<label>Material</label>
+							<input class="form-control form-group"/>
+						</div>
+					</div>
+					<div id="categoria_ninios" style="display:none">
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<label>Edad Recomendada</label>
+							<input class="form-control form-group"/>
+						</div>
+					</div>
+				</form>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:20px;">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
+						<a class="btn btn-primary btn-block btn-primary" href="#" role="button">
+							<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+							Buscar
+						</a>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
+						<a class="btn btn-primary btn-block btn-success" href="#" role="button" onClick="guardarArticulo();">
+							<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+							Guardar
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="mensajeError" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 alert alert-danger fade in" style="display:none">
+			<strong>ERROR:</strong>
+			<b></b>
+		</div>
+		<div id="mensajeOk" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 alert alert-success fade in" style="display:none">
+			<strong>Success:</strong>
+			<b></b>
+		</div>
+		
+		<div class="col-sm-8 col-md-8 col-lg-8 col-md-offset-2">
+			<table id="listaArticulos" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Nombre</th>
+						<th>Descripción</th>
+						<th>Precio</th>
+						<th>Marca</th>
+						<th>Origen</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${articulos}" var="articulo">
+						<tr id="articulo_${articulo.codigo}">
+							<td>${articulo.codigo}</td>
+							<td>${articulo.nombre}</td>
+							<td>${articulo.descripcion}</td>
+							<td>${articulo.precio}</td>
+							<td>${articulo.marca.nombre}</td>
+							<td>${articulo.origen.nombre}</td>
+							<td>
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size:20px; cursor:pointer"></span>
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="font-size:20px; cursor:pointer" onClick="eliminarArticulo('${articulo.codigo}');"></span>
+							</td>
+						</tr>					
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<spring:url value="/resources/js/bootstrap.min.js" var="bootstrapJs" />
+		<script src="${bootstrapJs}"></script>
+		
+		<script src="/resources/js/bootstrap.min.js"></script>
+		
+		<script src="/resources/js/administracionArticulos.js"></script>
+		
+		<script>
+			
+			
+
+			$('.next').click(function() {
+				var nextId = $(this).parents('.tab-pane').next().attr("id");
+				$('[href=#' + nextId + ']').tab('show');
+				return false;
+			});
+
+			$('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+				//update progress
+				var step = $(e.target).data('step');
+				var percent = (parseInt(step) / 3) * 100;
+
+				$('.progress-bar').css({
+					width : percent + '%'
+				});
+				$('.progress-bar').text("Paso " + step + " de 3");
+				//e.relatedTarget // previous tab
+			});
+
+			$('.first').click(function() {
+				$('#myWizard a:first').tab('show')
+			});
+		</script>
+		
+		
+
+	</body>
+</html>

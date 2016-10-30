@@ -1,0 +1,15 @@
+1476716925740	Copy package
+1476716934120	Delete element
+1476718592047	Rename package 'com.example.ejb'
+1476718606032	Rename package 'com.negocio'
+1476993098706	Delete element
+1476993392024	Delete element
+1477059804502	Delete element
+1477059867840	Delete element
+1477060042493	Infer generic type arguments
+1477060708828	Rename local variable 'paises'
+1477060717330	Rename local variable 'paisesVO'
+1477060731947	Rename local variable 'pais'
+1477062156410	Rename local variable 'articulovo'
+1477072577576	Rename local variable 'marcas'
+1477072592158	Rename local variable 'marcasVO'

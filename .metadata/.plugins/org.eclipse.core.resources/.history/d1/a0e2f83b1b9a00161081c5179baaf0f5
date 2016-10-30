@@ -1,0 +1,9 @@
+package com.entity;
+
+@Entity
+public class EstadoSolicitudArticulo {
+	private Integer id;
+	private String nombre;
+	
+	
+}

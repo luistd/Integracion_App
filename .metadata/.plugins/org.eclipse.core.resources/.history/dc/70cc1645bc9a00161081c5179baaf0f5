@@ -1,0 +1,64 @@
+function guardarArticulo(){
+	var articulo = {};
+	articulo.codigo = $("#formularioArticulo [name='codigo']").val();
+	articulo.nombre = $("#formularioArticulo [name='nombre']").val();
+	articulo.descripcion = $("#formularioArticulo [name='descripcion']").val();
+	articulo.precio = $("#formularioArticulo [name='precio']").val();
+	var marca = {};
+	marca.id = $("#formularioArticulo [name='marca'] option:selected").val();
+	marca.nombre = $("#formularioArticulo [name='marca'] option:selected").text();
+	articulo.marca = marca;
+	
+	var origen = {};
+	origen.id = $("#formularioArticulo [name='origen'] option:selected").val();
+	origen.nombre = $("#formularioArticulo [name='origen'] option:selected").text();
+	articulo.origen = origen;
+	
+     $.ajax({
+        type: 'post',
+        url: 'guardar-articulo',
+        data: JSON.stringify(articulo),
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        success: function (data) {
+        	agregarArticuloATabla(articulo);
+        }
+    });
+}
+
+function seleccionCategoria(){
+	var categoria = $("#categoria_articulo option:selected").text();
+	if(categoria == 'Electrodomésticos'){
+		$("#categoria_electrodomestico").show();
+		$("#categoria_moda").hide();
+	}else if(categoria == 'Moda'){
+		$("#categoria_moda").show();
+		$("#categoria_electrodomestico").hide();
+	}else if(categoria == 'Muebles'){
+		$("#categoria_electrodomestico, #categoria_moda").hide();
+	}else if(categoria == 'Niños'){
+		$("#categoria_electrodomestico, #categoria_moda").hide();
+	}
+}
+
+$('.next').click(function() {
+	var nextId = $(this).parents('.tab-pane').next().attr("id");
+	$('[href=#' + nextId + ']').tab('show');
+	return false;
+});
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+	//update progress
+	var step = $(e.target).data('step');
+	var percent = (parseInt(step) / 3) * 100;
+
+	$('.progress-bar').css({
+		width : percent + '%'
+	});
+	$('.progress-bar').text("Paso " + step + " de 3");
+	//e.relatedTarget // previous tab
+});
+
+$('.first').click(function() {
+	$('#myWizard a:first').tab('show')
+});

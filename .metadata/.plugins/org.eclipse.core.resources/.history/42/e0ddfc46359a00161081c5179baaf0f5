@@ -1,0 +1,18 @@
+package com.facade;
+
+import java.util.List;
+
+import com.vo.ArticuloVO;
+import com.vo.CategoriaVO;
+import com.vo.MarcaVO;
+import com.vo.PaisVO;
+
+public interface IFacade {
+	List<PaisVO> obtenerPaises();
+	List<MarcaVO> obtenerMarcas();
+	void guardarArticulo(ArticuloVO articuloVO);
+	List<ArticuloVO> obtenerArticulos();
+	void eliminarArticulo(String codigo);
+	ArticuloVO buscarArticuloPorId(String codigo);
+	List<CategoriaVO> obtenerCategorias();
+}
